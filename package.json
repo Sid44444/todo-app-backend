@@ -2,13 +2,7 @@
   "name": "todo-app-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "handler.js",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "express": "^4.17.0",
-    "serverless-http": "^2.0.2"
-  },
-  "devDependencies": {},
+  "main": "tasks.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,5 +16,10 @@
   "bugs": {
     "url": "https://github.com/Sid44444/todo-app-backend/issues"
   },
-  "homepage": "https://github.com/Sid44444/todo-app-backend#readme"
+  "homepage": "https://github.com/Sid44444/todo-app-backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.0",
+    "serverless-http": "^2.0.2"
+  }
 }

@@ -2,6 +2,7 @@ const serverless = require('serverless-http');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+app.use(cor());
 
 app.get('/tasks', function (request, response) {
 
@@ -13,4 +14,4 @@ app.get('/tasks', function (request, response) {
   response.json(someJson);
 })
 
-module.exports.tasks = serverless(app);
+module.exports.handler = serverless(app);

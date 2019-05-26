@@ -12,4 +12,4 @@ functions:
       - http:
           path: tasks
           method: get
-          cors: true
+          cors: true;
