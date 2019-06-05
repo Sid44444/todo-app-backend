@@ -13,7 +13,11 @@ functions:
       DB_USER: ${opt:DB_USER}
       DB_PASSWORD: ${opt:DB_PASSWORD}
     events:
-      - http:
+       - http:
           path: tasks
           method: get
+          cors: true
+       - http:
+          path: tasks
+          method: post
           cors: true

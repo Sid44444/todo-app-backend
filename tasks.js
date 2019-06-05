@@ -3,7 +3,9 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mysql = require('mysql');
+
 app.use(cors());
+app.use(express.json());
 
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -13,13 +15,14 @@ const connection = mysql.createConnection({
 });
 
 app.get("/tasks", function(request, response) {
-  // const username = request.query.username;
+   const username = request.query.username;
   let queryToExecute = "SELECT * FROM Tasks";
-  // if (username) {
-  //   query =
-  //     "SELECT * FROM Task JOIN User on Task.UserId = User.UserId WHERE User.Username = " +
-  //     connection.escape(username);
-  // }
+
+   if (username) {
+     queryToExecute =
+       "SELECT * FROM Task JOIN User on Task.UserId = User.UserId WHERE User.Username = " +
+       connection.escape(username);
+   }
   connection.query(queryToExecute, (err, queryResults) => {
     if (err) {
       console.log("Error fetching tasks", err);
@@ -32,6 +35,14 @@ app.get("/tasks", function(request, response) {
       });
     }
   });
+});
+
+app.post("/tasks", function(request, response) {
+
+  const taskToBeSaved = request.body;
+
+  console.log(taskToBeSaved);
+
 });
 
 module.exports.handler = serverless(app);
