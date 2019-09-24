@@ -25,9 +25,9 @@ app.get("/tasks", function (request, response) {
   // }
   connection.query(queryToExecute, (err, queryResults) => {
     if (err) {
-      console.log("Error fetching tasks", error);
+      console.log("Error fetching tasks", err);
       response.status(500).json({
-        error: error
+        error: err
       });
     } 
     else {
@@ -40,7 +40,7 @@ app.get("/tasks", function (request, response) {
 
 app.delete("/tasks/:id", function(request, response) {
   const query =
-    "DELETE FROM Task WHERE TaskId = " + connection.escape(request.params.id);
+    "DELETE FROM Tasks WHERE TaskId = " + connection.escape(request.params.id);
   connection.query(query, (err, deleteResults) => {
     if (err) {
       console.log("Error deleting Task", err);
@@ -67,20 +67,28 @@ app.post("/tasks", function (request, response) {
     }
     else {
       response.json({
-        taskId: results.insertId
+        taskId: results.insertId,
+        description: taskToBeSaved.description,
+        completed: taskToBeSaved.completed,
+        userId: taskToBeSaved.userId
       });
     }
   });
 });
 
-app.put("/tasks/:id", function(request, response) {
-  const task = request.body.task;
+app.put("/tasks/:id", function(request, response) { 
+  // request.body = {
+  //   "description" : "Fly to the moon",
+  //   "completed" : false,
+  //   "userId" : 1
+  // }
+  const task = request.body;
   const id = request.params.id;
   const query =
-    "UPDATE Task SET Description = ?, Completed = ?, UserId = ? WHERE TaskId = ?";
+    "UPDATE Tasks SET Description = ?, Completed = ? WHERE TaskId = ?";
   connection.query(
     query,
-    [task.Description, task.Completed, task.UserId, id],
+    [task.description, task.completed, id],
     function(err, queryResponse) {
       if (err) {
         console.log("Error updating task", err);
@@ -92,5 +100,8 @@ app.put("/tasks/:id", function(request, response) {
   );
 });
 
+app.get("/", function(request,response) {
+  response.status(200).send("Okay it works");
+})
 
 module.exports.handler = serverless(app);

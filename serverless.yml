@@ -21,3 +21,15 @@ functions:
           path: tasks
           method: post
           cors: true
+       - http:
+          path: /
+          method: get
+          cors: true
+       - http:
+          path: tasks/{id}
+          method: delete
+          cors: true
+       - http:
+          path: tasks/{id}
+          method: put
+          cors: true
